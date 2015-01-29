@@ -11,15 +11,15 @@ angular.module('EmailApp', ['ngRoute']).config(function ( $routeProvider ) {
 		templateUrl: 'src/sent/sent.html',
 		controller: 'SentCtrl', // map js to html scope
 	})
-   .when('/new', {
+   .when('/create', {
 		templateUrl: 'src/new/new.html',
 		controller: 'NewMsgCtrl', 
 	})
-	.when('/preview', {
+	.when('/view', {
 		templateUrl: 'src/preview/preview.html',
 		controller: 'PreviewCtrl', 
 	})
-	.when('/conf', {
+	.when('/config', {
 		templateUrl: 'src/configuration/configuration.html',
 		controller: 'ConfigurationCtrl', 
 	})
