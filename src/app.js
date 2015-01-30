@@ -1,4 +1,4 @@
-angular.module('EmailApp', ['ngRoute']).config(function ( $routeProvider ) {
+angular.module('EmailApp', ['ngRoute']).config(['$routeProvider',function ( $routeProvider ) {
 	'use strict';
 	// configure urls
 	$routeProvider
@@ -15,7 +15,7 @@ angular.module('EmailApp', ['ngRoute']).config(function ( $routeProvider ) {
 		templateUrl: 'src/new/new.html',
 		controller: 'NewMsgCtrl', 
 	})
-	.when('/view', {
+	.when('/view/:param', {
 		templateUrl: 'src/preview/preview.html',
 		controller: 'PreviewCtrl', 
 	})
@@ -26,4 +26,4 @@ angular.module('EmailApp', ['ngRoute']).config(function ( $routeProvider ) {
 	.otherwise({ // default
 		redirectTo: '/inbox'
 	});
-});
+}]);

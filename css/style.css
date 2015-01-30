@@ -1,3 +1,11 @@
 .fixer{
 	height: 70px;
 }
+
+.read-false{
+	font-weight: bold;
+}
+
+.read-true{
+	font-weight: normal;
+}

@@ -1,5 +1,8 @@
 <div ng-controller="PreviewCtrl">
-        <div class="item">
-             PODGLĄD WIADOMOŚCI
-        </div>
+	<h3> {{email.title}} </h3> <hr>
+	<p> Od: {{email.sender}} </p>
+	<p> {{email.content}}</p>
+	<p> Otrzymano: {{email.received}}</p>
+	
+	<button ng-click="delete()">DELETE</button>
 </div>
