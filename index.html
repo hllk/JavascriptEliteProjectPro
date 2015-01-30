@@ -3,23 +3,52 @@
   <head>
     <title>Dziobak.com - Prawdopodobnie najlepszy klient poczty jaki kiedykolwiek powstał</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="css/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
-  	 <div class='links'>
-  	   <a ng-href='#/inbox'>Skrzynka odbiorcza</a> 
-  	   <a ng-href='#/sent'>Wysłane</a> 
-		<a ng-href='#/create'>Nowa</a>  
-		<a ng-href='#/view'>Podgląd</a> 	 
-		<a ng-href='#/config'>Konfiguracja</a> <br><br>	
-  	 </div>
-    <div ng-view></div>
-    
+  
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Dziobak.com</a>
+        </div>
+        <!--
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"> <a href='#/inbox'>Skrzynka odbiorcza</a> </li>
+            <li><a ng-href='#/sent'>Wysłane</a> </li>
+            <li><a ng-href='#/create'>Nowa</a> </li>
+            <li><a ng-href='#/view'>Podgląd</a> </li>
+            <li><a ng-href='#/config'>Konfiguracja</a> </li>
+          </ul>
+        </div>/.nav-collapse -->
+      </div>
+    </nav>
+    <div class="fixer"></div>
+    <div class="container" role="main">
+		 
+		  <div class="row">
+  <div class="col-md-2">
+		<ul class="nav nav-pills nav-stacked" role="tablist">
+            <li class="active"> <a href='#/inbox'>Skrzynka odbiorcza</a> </li>
+            <li><a ng-href='#/sent'>Wysłane</a> </li>
+            <li><a ng-href='#/create'>Nowa</a> </li>
+            <li><a ng-href='#/view'>Podgląd</a> </li>
+            <li><a ng-href='#/config'>Konfiguracja</a> </li>       
+      </ul>  
+  </div>
+  <div class="col-md-10">
+  <div ng-view></div> 
+  </div>
+</div>            
+    </div> 
     <!--libraries-->
     <script src="lib/jquery-1.11.1.js"></script>
     <script src="lib/angular.js"></script>
     <script src="lib/angular-route.js"></script>
+     <script src="css/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
     
     <!--app files
     <script src="src/app.js"></script>

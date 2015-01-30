@@ -1,5 +1,20 @@
 <div ng-controller="InboxCtrl">
-        <div class="item">
-             SKRZYNKA ODBIORCZA
-        </div>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Nadawca</th>
+                  <th>Tytuł</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="mail in emailsRes" class=read-{{mail.read}}>
+                  <td>{{mail.sender}}</td>
+                  <td>{{mail.title}}</td>
+                  <td>{{mail.received}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 </div>

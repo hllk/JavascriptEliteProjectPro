@@ -17,4 +17,5 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope,  
    
    
    $scope.getEmails();
+   
 });
