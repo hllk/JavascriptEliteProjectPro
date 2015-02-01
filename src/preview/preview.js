@@ -1,5 +1,5 @@
 /**
-* Controller: NewMsgCtrl
+* Controller: PreviewCtrl
 */
 angular.module('EmailApp').controller('PreviewCtrl', function PreviewCtrl($scope, $location, $routeParams, InboxFactory) {
 	'use strict';

@@ -71,6 +71,10 @@ angular.module('EmailApp', ['ngRoute']).config(['$routeProvider',function ( $rou
 		   .success(function(jsonData, statusCode){
 			   console.log('The request was successful!', statusCode);
 			   exports.email = jsonData;
+			   if(exports.email.read === false){
+					exports.readMessage(exports.email);			   
+			   }
+			   
 			})
 			.error(function (data) {
 				console.log('There was an error!', data);
@@ -114,6 +118,17 @@ angular.module('EmailApp', ['ngRoute']).config(['$routeProvider',function ( $rou
                 console.log('Message lost somewhere between time and space', data);
             });
     };
+    
+    exports.readMessage = function (msg) {
+			msg.read = true;
+			return $http.put('/emails/'+msg.id, msg)
+			  	.success(function(jsonData, statusCode){
+					console.log('The request was successful!', statusCode);
+			   })
+				.error(function (data) {
+				 	console.log('There was an error!', data);
+				});
+    };
 	
 	return exports;
 });;/**
@@ -136,16 +151,15 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, I
 		});
 		
    $scope.read = function(id) {
-      alert("open msg " + id);
+      InboxFactory.readMessage();
    };
    
    $scope.delete = function (id) {
    	InboxFactory.deleteMessage(id)		
    	.success(function(jsonData, statusCode){
-
 			var tableRow = $('#' + id);
 			tableRow.remove();
-						//alert("USUNIĘTO!");
+			//alert("USUNIĘTO!");
 		});
    };
    

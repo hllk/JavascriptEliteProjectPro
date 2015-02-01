@@ -17,6 +17,10 @@ angular.module('EmailApp').factory('InboxFactory', function InboxFactory ($rootS
 		   .success(function(jsonData, statusCode){
 			   console.log('The request was successful!', statusCode);
 			   exports.email = jsonData;
+			   if(exports.email.read === false){
+					exports.readMessage(exports.email);			   
+			   }
+			   
 			})
 			.error(function (data) {
 				console.log('There was an error!', data);
@@ -59,6 +63,17 @@ angular.module('EmailApp').factory('InboxFactory', function InboxFactory ($rootS
             .error(function(data){
                 console.log('Message lost somewhere between time and space', data);
             });
+    };
+    
+    exports.readMessage = function (msg) {
+			msg.read = true;
+			return $http.put('/emails/'+msg.id, msg)
+			  	.success(function(jsonData, statusCode){
+					console.log('The request was successful!', statusCode);
+			   })
+				.error(function (data) {
+				 	console.log('There was an error!', data);
+				});
     };
 	
 	return exports;
