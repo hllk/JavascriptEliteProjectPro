@@ -26,7 +26,33 @@ angular.module('EmailApp', ['ngRoute']).config(['$routeProvider',function ( $rou
 	.otherwise({ // default
 		redirectTo: '/inbox'
 	});
-}]);;angular.module('EmailApp').factory('InboxFactory', function InboxFactory ($rootScope, $http, $location) {
+}]);;angular.module('EmailApp').directive('helloWorld', function() {
+  return {
+      restrict: 'E',
+      replace: 'true',
+      template: '<div><h3>Hello2  World3!!</div>',
+      controller: function (InboxFactory) {
+         this.messages = [];
+         InboxFactory.getMessages()
+            .then( angular.bind( this, function then() {
+               this.messages = InboxFactory.messages;
+               
+               this.template = "abc";
+               
+               for (var i in this.messages){
+						 this.template += this.messages[i].sender + "<br>";     
+               }
+               console.log(this.template);
+            })	);
+         
+      },
+      compile: function CompilingFunction($templateElement, $templateAttributes) {
+        return function LinkingFunction($scope, $linkElement, $linkAttributes) {          
+
+      };
+    }
+  };
+});;angular.module('EmailApp').factory('InboxFactory', function InboxFactory ($rootScope, $http, $location) {
 	'use strict';
 	var exports = {};
 	exports.getMessages = function () {
@@ -109,10 +135,24 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, I
 			$scope.emails = jsonData;
 		});
 		
-   $scope.openMessage = function(id) {
-      //$state.go('view');
-      console.log("open msg " + id);
+   $scope.read = function(id) {
+      alert("open msg " + id);
    };
+   
+   $scope.delete = function (id) {
+   	InboxFactory.deleteMessage(id)		
+   	.success(function(jsonData, statusCode){
+
+			var tableRow = $('#' + id);
+			tableRow.remove();
+						//alert("USUNIĘTO!");
+		});
+   };
+   
+   
+   
+   
+   
 		
 });;/**
 * Controller: NewMsgCtrl
@@ -129,7 +169,7 @@ angular.module('EmailApp').controller('NewMsgCtrl', function NewMsgCtrl($scope, 
 		});
     };
 });;/**
-* Controller: NewMsgCtrl
+* Controller: PreviewCtrl
 */
 angular.module('EmailApp').controller('PreviewCtrl', function PreviewCtrl($scope, $location, $routeParams, InboxFactory) {
 	'use strict';

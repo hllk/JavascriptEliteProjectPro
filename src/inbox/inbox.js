@@ -11,9 +11,23 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, I
 			$scope.emails = jsonData;
 		});
 		
-   $scope.openMessage = function(id) {
-      //$state.go('view');
-      console.log("open msg " + id);
+   $scope.read = function(id) {
+      alert("open msg " + id);
    };
+   
+   $scope.delete = function (id) {
+   	InboxFactory.deleteMessage(id)		
+   	.success(function(jsonData, statusCode){
+
+			var tableRow = $('#' + id);
+			tableRow.remove();
+						//alert("USUNIĘTO!");
+		});
+   };
+   
+   
+   
+   
+   
 		
 });

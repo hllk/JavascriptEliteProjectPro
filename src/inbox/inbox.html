@@ -9,13 +9,18 @@
                   <th>Nadawca</th>
                   <th>Tytuł</th>
                   <th>Data</th>
+                  <th>Usuń</th>
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="mail in emails" class=read-{{mail.read}}>
+                <tr ng-repeat="mail in emails" class=read-{{mail.read}} id={{mail.id}}>
                   <td>{{mail.sender}}</td>
-                  <td><a href="#/view/{{mail.id}}" >{{mail.title}}</a></td>
+                  <td><a href="#/view/{{mail.id}}" ng-click="read(1)">{{mail.title}}</a></td>
                   <td>{{mail.received}}</td>
+                  <td><button type="button" class="btn btn-default btn-sm" ng-click="delete(mail.id)">
+  							<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+							</button>  
+                  </td>
                 </tr>
               </tbody>
             </table>
