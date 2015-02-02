@@ -1,18 +1,16 @@
 /**
 * Controller: InboxCtrl
 */
-angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, InboxFactory) {
+angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, mailService) {
 	'use strict';
-	console.log('Inbox Loaded!');
-
-   InboxFactory.getMessages()
+   mailService.getMessages()
 		.success(function(jsonData, statusCode){
 			console.log('The request was successful!', statusCode);
 			$scope.emails = jsonData;
 		});
 		   
    $scope.delete = function (id) {
-   	InboxFactory.deleteMessage(id)		
+   	mailService.deleteMessage(id)		
    	.success(function(jsonData, statusCode){
 			var tableRow = $('#' + id);
 			tableRow.remove();

@@ -52,7 +52,7 @@ angular.module('EmailApp', ['ngRoute']).config(['$routeProvider',function ( $rou
       };
     }
   };
-});;angular.module('EmailApp').factory('InboxFactory', function InboxFactory ($rootScope, $http, $location) {
+});;angular.module('EmailApp').factory('mailService', function InboxFactory ($rootScope, $http, $location) {
 	'use strict';
 	var exports = {};
 	exports.getMessages = function () {
@@ -140,43 +140,31 @@ angular.module('EmailApp').controller('ConfigurationCtrl', function Configuratio
 });;/**
 * Controller: InboxCtrl
 */
-angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, InboxFactory) {
+angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, mailService) {
 	'use strict';
-	console.log('Inbox Loaded!');
-
-   InboxFactory.getMessages()
+   mailService.getMessages()
 		.success(function(jsonData, statusCode){
 			console.log('The request was successful!', statusCode);
 			$scope.emails = jsonData;
 		});
-		
-   $scope.read = function(id) {
-      InboxFactory.readMessage();
-   };
-   
+		   
    $scope.delete = function (id) {
-   	InboxFactory.deleteMessage(id)		
+   	mailService.deleteMessage(id)		
    	.success(function(jsonData, statusCode){
 			var tableRow = $('#' + id);
 			tableRow.remove();
-			//alert("USUNIĘTO!");
 		});
    };
    
-   
-   
-   
-   
-		
 });;/**
 * Controller: NewMsgCtrl
 */
-angular.module('EmailApp').controller('NewMsgCtrl', function NewMsgCtrl($scope, $location, InboxFactory) {
+angular.module('EmailApp').controller('NewMsgCtrl', function NewMsgCtrl($scope, $location, mailService) {
 	'use strict';
 
     $scope.send = function() {
         console.log($scope.inputTitle);
-        InboxFactory.sendMessage($scope.inputTitle, $scope.inputEmail, $scope.inputContent)
+        mailService.sendMessage($scope.inputTitle, $scope.inputEmail, $scope.inputContent)
             .success(function(jsonData, statusCode){
 			alert("wysłano!");
 			$location.path("/sent");
@@ -185,16 +173,16 @@ angular.module('EmailApp').controller('NewMsgCtrl', function NewMsgCtrl($scope, 
 });;/**
 * Controller: PreviewCtrl
 */
-angular.module('EmailApp').controller('PreviewCtrl', function PreviewCtrl($scope, $location, $routeParams, InboxFactory) {
+angular.module('EmailApp').controller('PreviewCtrl', function PreviewCtrl($scope, $location, $routeParams, mailService) {
 	'use strict';
-   InboxFactory.getMessage($routeParams.param)
+   mailService.getMessage($routeParams.param)
 		.success(function(jsonData, statusCode){
 			console.log('The request was successful!', statusCode);
 			$scope.email = jsonData;
 		});
 		
    $scope.delete = function(){
-	  InboxFactory.deleteMessage($routeParams.param)
+	  mailService.deleteMessage($routeParams.param)
 		.success(function(jsonData, statusCode){
 			alert("USUNIĘTO!");
 			$location.path("/inbox");
@@ -203,11 +191,11 @@ angular.module('EmailApp').controller('PreviewCtrl', function PreviewCtrl($scope
 });;/**
 * Controller: SendboxCtrl
 */
-angular.module('EmailApp').controller('SentCtrl', function SentCtrl ($scope,  InboxFactory) {
+angular.module('EmailApp').controller('SentCtrl', function SentCtrl ($scope,  mailService) {
 	'use strict';
 	console.log('Sent loaded!');
 	
-	InboxFactory.getSent()
+	mailService.getSent()
 		.success(function(jsonData, statusCode){
 			console.log('The request was successful!', statusCode);
 			$scope.sentemails = jsonData;

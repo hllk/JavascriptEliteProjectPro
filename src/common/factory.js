@@ -1,4 +1,4 @@
-angular.module('EmailApp').factory('InboxFactory', function InboxFactory ($rootScope, $http, $location) {
+angular.module('EmailApp').factory('mailService', function InboxFactory ($rootScope, $http, $location) {
 	'use strict';
 	var exports = {};
 	exports.getMessages = function () {

@@ -1,11 +1,11 @@
 /**
 * Controller: SendboxCtrl
 */
-angular.module('EmailApp').controller('SentCtrl', function SentCtrl ($scope,  InboxFactory) {
+angular.module('EmailApp').controller('SentCtrl', function SentCtrl ($scope,  mailService) {
 	'use strict';
 	console.log('Sent loaded!');
 	
-	InboxFactory.getSent()
+	mailService.getSent()
 		.success(function(jsonData, statusCode){
 			console.log('The request was successful!', statusCode);
 			$scope.sentemails = jsonData;
