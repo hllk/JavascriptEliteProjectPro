@@ -2,7 +2,7 @@
 	<h3> {{email.title}} </h3> <hr>
 	<p> Od: {{email.sender}} </p>
 	<p> {{email.content}}</p>
-	<p> Otrzymano: {{email.received}}</p>
+	<p> Otrzymano: {{email.received | date:'yyyy-MM-dd HH:mm:ss'}}</p>
 	
 	<button ng-click="delete()">DELETE</button>
 </div>

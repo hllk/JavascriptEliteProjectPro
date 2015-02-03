@@ -1,6 +1,9 @@
-<div ng-controller="InboxCtrl">
-        
-<!--<hello-world/>-->
+<div ng-controller="InboxCtrl" ng-init="init()">
+      <received-mails></received-mails>   
+     
+<!--<hello-world/>
+<received-mails list='emails' delete='delete()'></received-mails>   
+
 		<div class="table-responsive">
 
             <table class="table table-hover">
@@ -13,10 +16,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="mail in emails" class=read-{{mail.read}} id={{mail.id}}>
+                <tr ng-repeat="mail in emails | orderBy:mail.received" class=read-{{mail.read}} id={{mail.id}}>
                   <td>{{mail.sender}}</td>
-                  <td><a href="#/view/{{mail.id}}">{{mail.title}}</a></td>
-                  <td>{{mail.received}}</td>
+                  <td>
+                  	<a href="#/view/{{mail.id}}">{{mail.title}}</a>
+                  	<div class="mail-fragment">{{mail.content}}</div>
+                  </td>
+                  <td><mydate>{{mail.received }}</mydate></td>
                   <td><button type="button" class="btn btn-default btn-sm" ng-click="delete(mail.id)">
   							<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 							</button>  
@@ -24,7 +30,7 @@
                 </tr>
               </tbody>
             </table>
-       </div>
+       </div> -->
 </div>
 
 
