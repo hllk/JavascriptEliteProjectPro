@@ -1,4 +1,4 @@
-angular.module('EmailApp', ['ngRoute']).config(['$routeProvider',function ( $routeProvider ) {
+angular.module('EmailApp', ['ngRoute', 'LocalStorageModule']).config(['$routeProvider', 'localStorageServiceProvider', function ( $routeProvider, localStorageServiceProvider ) {
 	'use strict';
 	// configure urls
 	$routeProvider
@@ -26,4 +26,8 @@ angular.module('EmailApp', ['ngRoute']).config(['$routeProvider',function ( $rou
 	.otherwise({ // default
 		redirectTo: '/inbox'
 	});
+    localStorageServiceProvider
+    .setPrefix('EmailApp')
+    .setStorageType('localStorage')
+    .setNotify('true', 'true');
 }]);

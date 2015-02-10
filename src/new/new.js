@@ -1,9 +1,13 @@
 /**
 * Controller: NewMsgCtrl
 */
-angular.module('EmailApp').controller('NewMsgCtrl', function NewMsgCtrl($scope, $location, mailService) {
+angular.module('EmailApp').controller('NewMsgCtrl', function NewMsgCtrl($scope, $location, mailService, localStorageService) {
 	'use strict';
 
+    if (localStorageService.isSupported) {
+    console.log("Hurra!!");
+        }
+                                      
     $scope.adresses = [{id: 1}];
     $scope.emails = [];
     $scope.send = function() {

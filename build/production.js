@@ -1,4 +1,4 @@
-angular.module('EmailApp', ['ngRoute']).config(['$routeProvider',function ( $routeProvider ) {
+angular.module('EmailApp', ['ngRoute', 'LocalStorageModule']).config(['$routeProvider', 'localStorageServiceProvider', function ( $routeProvider, localStorageServiceProvider ) {
 	'use strict';
 	// configure urls
 	$routeProvider
@@ -26,6 +26,10 @@ angular.module('EmailApp', ['ngRoute']).config(['$routeProvider',function ( $rou
 	.otherwise({ // default
 		redirectTo: '/inbox'
 	});
+    localStorageServiceProvider
+    .setPrefix('EmailApp')
+    .setStorageType('localStorage')
+    .setNotify('true', 'true');
 }]);;angular.module('EmailApp').directive('receivedMails', function() {
   return {
       restrict: 'E',
@@ -210,9 +214,13 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, m
 });;/**
 * Controller: NewMsgCtrl
 */
-angular.module('EmailApp').controller('NewMsgCtrl', function NewMsgCtrl($scope, $location, mailService) {
+angular.module('EmailApp').controller('NewMsgCtrl', function NewMsgCtrl($scope, $location, mailService, localStorageService) {
 	'use strict';
 
+    if (localStorageService.isSupported) {
+    console.log("Hurra!!");
+        }
+                                      
     $scope.adresses = [{id: 1}];
     $scope.emails = [];
     $scope.send = function() {
