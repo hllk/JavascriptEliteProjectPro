@@ -65,26 +65,6 @@ angular.module('EmailApp', ['ngRoute']).config(['$routeProvider',function ( $rou
   	};
 });
 
-angular.module('EmailApp').directive('isActiveNav', [ '$location', function($location) {
-	return {
- 		restrict: 'A',
- 		link: function(scope, element) {
-   		scope.location = $location;
-   		scope.$watch('location.path()', function(currentPath) {
-     			if('#' + currentPath === element[0].attributes.href.nodeValue) {
-       			element.parent().addClass('active');
-     			} else {
-       			element.parent().removeClass('active');
-     			}
-   		});
- 		}
- 	};
-}]);
-
-
-
-
-
 angular.module('EmailApp').directive('listView', function() {
   return {
       restrict: 'E',
@@ -109,7 +89,23 @@ angular.module('EmailApp').directive('listView', function() {
       	});
     	}
   	};
-});;angular.module('EmailApp').factory('mailService', function InboxFactory ($rootScope, $http, $location) {
+});
+
+angular.module('EmailApp').directive('isActiveNav', [ '$location', function($location) {
+	return {
+ 		restrict: 'A',
+ 		link: function(scope, element) {
+   		scope.location = $location;
+   		scope.$watch('location.path()', function(currentPath) {
+     			if('#' + currentPath === element[0].attributes.href.nodeValue) {
+       			element.parent().addClass('active');
+     			} else {
+       			element.parent().removeClass('active');
+     			}
+   		});
+ 		}
+ 	};
+}]);;angular.module('EmailApp').factory('mailService', function InboxFactory ($rootScope, $http, $location) {
 	'use strict';
 	var exports = {};
 	exports.getMessages = function () {
@@ -161,6 +157,7 @@ angular.module('EmailApp').directive('listView', function() {
 	};
     
     exports.sendMessage = function(messageTitle, messageReceivers, messageContent) {
+        //var receiversArray = JSON.stringify(messageReceivers);
         return $http.post('/sent', {
             id: Date.now(),
             title: messageTitle,
@@ -216,13 +213,27 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, m
 angular.module('EmailApp').controller('NewMsgCtrl', function NewMsgCtrl($scope, $location, mailService) {
 	'use strict';
 
+    $scope.adresses = [{id: 1}];
+    $scope.emails = [];
     $scope.send = function() {
-        console.log($scope.inputTitle);
-        mailService.sendMessage($scope.inputTitle, $scope.inputEmail, $scope.inputContent)
+        console.log($scope.emails);
+        mailService.sendMessage($scope.inputTitle, $scope.emails, $scope.inputContent)
             .success(function(jsonData, statusCode){
 			alert("wysłano!");
 			$location.path("/sent");
 		});
+    };
+    
+    $scope.addNewAdress = function() {
+        var newItemNo = $scope.adresses.length+1;
+        $scope.adresses.push({'id': newItemNo});
+    };
+
+    $scope.removeAdress = function() {
+        if ($scope.adresses.length > 1) {
+            $scope.adresses.pop();
+        }
+        
     };
 });;/**
 * Controller: PreviewCtrl

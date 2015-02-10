@@ -4,12 +4,26 @@
 angular.module('EmailApp').controller('NewMsgCtrl', function NewMsgCtrl($scope, $location, mailService) {
 	'use strict';
 
+    $scope.adresses = [{id: 1}];
+    $scope.emails = [];
     $scope.send = function() {
-        console.log($scope.inputTitle);
-        mailService.sendMessage($scope.inputTitle, $scope.inputEmail, $scope.inputContent)
+        console.log($scope.emails);
+        mailService.sendMessage($scope.inputTitle, $scope.emails, $scope.inputContent)
             .success(function(jsonData, statusCode){
 			alert("wysłano!");
 			$location.path("/sent");
 		});
+    };
+    
+    $scope.addNewAdress = function() {
+        var newItemNo = $scope.adresses.length+1;
+        $scope.adresses.push({'id': newItemNo});
+    };
+
+    $scope.removeAdress = function() {
+        if ($scope.adresses.length > 1) {
+            $scope.adresses.pop();
+        }
+        
     };
 });

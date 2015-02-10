@@ -50,6 +50,7 @@ angular.module('EmailApp').factory('mailService', function InboxFactory ($rootSc
 	};
     
     exports.sendMessage = function(messageTitle, messageReceivers, messageContent) {
+        //var receiversArray = JSON.stringify(messageReceivers);
         return $http.post('/sent', {
             id: Date.now(),
             title: messageTitle,
