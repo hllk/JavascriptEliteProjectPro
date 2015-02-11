@@ -224,12 +224,15 @@ angular.module('EmailApp').controller('NewMsgCtrl', function NewMsgCtrl($scope, 
     $scope.adresses = [{id: 1}];
     $scope.emails = [];
     $scope.send = function() {
-        console.log($scope.emails);
-        mailService.sendMessage($scope.inputTitle, $scope.emails, $scope.inputContent)
-            .success(function(jsonData, statusCode){
-			alert("wysłano!");
-			$location.path("/sent");
-		});
+        $scope.submitted = true;
+        if ($scope.messageForm.$valid) {
+            console.log($scope.emails);
+            mailService.sendMessage($scope.inputTitle, $scope.emails, $scope.inputContent)
+                .success(function(jsonData, statusCode){
+                alert("wysłano!");
+                $location.path("/sent");
+		});}
+     
     };
     
     $scope.addNewAdress = function() {
