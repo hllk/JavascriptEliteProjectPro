@@ -84,7 +84,7 @@ angular.module('EmailApp').directive('listView', function() {
       // creates a scope variable in your directive
       // called `list` bound to whatever was passed
       // in via the `list` attribute in the DOM
-      list: '=list'
+      	list: '=list'
       },
       //The link function is mainly used for:
       //   attaching event listeners to DOM elements,
@@ -94,7 +94,7 @@ angular.module('EmailApp').directive('listView', function() {
 
          scope.$watch('list', function(list) {
         		angular.forEach(list, function(mail, key) {
-        			$("tbody").append("<tr><td>" + mail.receivers +"</td><td><a href=\"#/view/" +mail.id+ "\">" + mail.title +"</a></td></tr>)");
+        			$("tbody").prepend("<tr><td>" + mail.receivers +"</td><td><a href=\"#/sentview/" +mail.id+ "\">" + mail.title +"</a></td></tr>)");
         		});
       	});
     	}
@@ -198,9 +198,38 @@ angular.module('EmailApp').directive('isActiveNav', [ '$location', function($loc
 });;/**
 * Controller: NewMsgCtrl
 */
-angular.module('EmailApp').controller('ConfigurationCtrl', function ConfigurationCtrl($scope,  $http) {
-	'use strict';
-
+angular.module('EmailApp').controller('ConfigurationCtrl', function ConfigurationCtrl($scope, localStorageService) {
+	'use strict';  
+     
+     if (localStorageService.isSupported) {
+         if(angular.isUndefined(localStorageService.get('localcss')) || localStorageService.get('localcss') === null) {
+             $scope.localcss = 'cyborg';
+             }
+         else {
+              $scope.localcss = localStorageService.get('localcss');
+          }
+     }
+    else { 
+        $scope.localcss = 'cyborg';
+    }
+            
+      // create the list of bootswatches
+      $scope.bootstraps = [
+        { name: 'Cerulean', url: 'cerulean' },
+        { name: 'Superhero', url: 'superhero' },
+        { name: 'United', url: 'united' },
+        { name: 'Cyborg', url: 'cyborg' }
+      ];
+      
+       
+    $scope.$watch('localcss', function () {
+        if ($scope.localcss !== null ) {
+            localStorageService.add('localcss', $scope.localcss);
+            console.log($scope.localcss);
+          }
+    });
+    
+   
 });;/**
 * Controller: InboxCtrl
 */

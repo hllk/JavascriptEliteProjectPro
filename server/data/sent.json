@@ -206,5 +206,14 @@
     ],
     "content": "afdsaf",
     "sent": 1423647596517
+  },
+  {
+    "id": 1424099662690,
+    "title": "tytuł",
+    "receivers": [
+      "tadadam@com"
+    ],
+    "content": "treść",
+    "sent": 1424099662690
   }
 ]

@@ -1,13 +1,17 @@
 <div ng-controller="ConfigurationCtrl">
         <div class="item">
-             KONFIGURACJA
+            KONFIGURACJA
         </div>
     
-        <ul class="dropdown-menu">
+       <div class="well">
+        <form>
 
-  <li><a href="#" class="change-style-menu-item" rel="assets/bootstrap/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> bootstrap.min.css (Default)</a></li>
+            <div class="form-group">
+                <label>Motyw</label>
+                <select class="form-control" ng-model="localcss" ng-options="bootstrap.url as bootstrap.name for bootstrap in bootstraps">
+                </select>
+            </div>
+        </form>
+    </div>
 
-  <li><a href="#" class="change-style-menu-item" rel="assets/bootstrap/bootstrap.cyborg.min.css"><i class="icon-fixed-width icon-pencil"></i> bootstrap.cyborg.min.css (Cyborg)</a></li>
-
-</ul>
 </div>
