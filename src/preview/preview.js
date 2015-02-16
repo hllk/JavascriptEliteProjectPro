@@ -16,4 +16,8 @@ angular.module('EmailApp').controller('PreviewCtrl', function PreviewCtrl($scope
 			$location.path("/inbox");
 		});
    };
+   
+   $scope.back = function(){
+			$location.path("/inbox");
+   };
 });

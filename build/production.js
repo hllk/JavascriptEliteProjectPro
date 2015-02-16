@@ -54,13 +54,19 @@ angular.module('EmailApp', ['ngRoute', 'LocalStorageModule']).config(['$routePro
 			   }); 
 				var remove = $("<td></td>").append(removeBtn);        			
         		var row = $("<tr class='read-"+mail.read+"' id='"+mail.id+"'></tr>)");
-        		$("tbody").append(row.append(sender).append(title).append(remove));
+        		$("tbody").prepend(row.append(sender).append(title).append(remove));
         };
+        
+        var formatTime = function(timestamp) {
+	 			var date = new Date(timestamp * 1000);
+				var datevalues = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+				return datevalues;
+			};
       },
 
       link: function(scope, elem, attrs) {
-         scope.$watch('emails', function(list) {
-         	for(var i in scope.emails){
+         scope.$watch('newemails', function(list) {
+         	for(var i in scope.newemails){
          		var mail = list[i];
         			addElement(mail);
          	}
@@ -198,19 +204,73 @@ angular.module('EmailApp').controller('ConfigurationCtrl', function Configuratio
 });;/**
 * Controller: InboxCtrl
 */
-angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, mailService) {
+angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, $interval, mailService) {
 	'use strict';
+
+	$scope.aa="aa";
 	$scope.init = function(){
    	mailService.getMessages()
 			.success(function(jsonData, statusCode){
 				$scope.emails = jsonData;
+				$scope.newemails = jsonData;
 			});
 	};
 	
    $scope.delete = function (id) {
-   	return mailService.deleteMessage(id);
+   	return mailService.deleteMessage(id)
+   		.success(function(jsonData, statusCode){
+				removeElement($scope.emails, id);
+		});
    };
    
+   var removeElement = function(data, id){
+   	for(var i = 0; i < data.length; i++) {
+    		if(data[i].id == id) {
+         	data = data.splice(i, 1);
+         	break;
+    		}
+		}
+   };
+   
+   var isEqual = function (l1, l2) {
+   	if (l1===undefined || l2.length===undefined){
+   		return true;
+   	}
+   	if (l1.length!=l2.length){
+   		return false;
+   	}
+   	else{
+		   for(var i in l1){
+				if(l1[i].id!=l2[i].id){
+					return false;				
+				}		   
+		   }
+		}
+		return true;
+   };
+   
+   $interval(function(){
+      mailService.getMessages()
+			.success(function(jsonData, statusCode){
+				if(isEqual($scope.emails,jsonData)){
+					console.log("rowne");
+				}
+				else{
+					console.log("nierowne");
+					var i = $scope.emails.length;
+					var end = jsonData.length;
+					$scope.newemails=[];
+					for(i; i<end; i++){
+						$scope.newemails.push(jsonData[i]);		
+						$scope.emails.push(jsonData[i]);				
+					}
+					
+					
+				}
+			});
+   }.bind(this), 5000);  
+   
+
 });;/**
 * Controller: NewMsgCtrl
 */
@@ -263,6 +323,10 @@ angular.module('EmailApp').controller('PreviewCtrl', function PreviewCtrl($scope
 			alert("USUNIĘTO!");
 			$location.path("/inbox");
 		});
+   };
+   
+   $scope.back = function(){
+			$location.path("/inbox");
    };
 });;/**
 * Controller: SendboxCtrl
