@@ -5,7 +5,8 @@ angular.module('EmailApp').controller('ConfigurationCtrl', function Configuratio
 	'use strict';  
      
    $rootScope.data = {
-       localcss: ''
+       localcss: '',
+       rate: ''
    };	
    
    if (localStorageService.isSupported) {
@@ -46,13 +47,12 @@ angular.module('EmailApp').controller('ConfigurationCtrl', function Configuratio
         }
     };
     
-    $scope.frequencies = 1;
-
+     
     $scope.$watch('frequencies', function () {
          $rootScope.$broadcast('rateEvent', $scope.frequencies * 60000);
+         $rootScope.frequencies = $scope.frequencies;
          }
     );
-    
     
    
 });
