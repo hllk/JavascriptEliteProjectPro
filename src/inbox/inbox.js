@@ -1,18 +1,17 @@
 /**
 * Controller: InboxCtrl
 */
-angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, $interval, mailService, $rootScope, $timeout) {
+angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, mailService, $rootScope, $timeout) {
 	'use strict';
 
-	$scope.aa="aa";
-    $rootScope.rate = 60000;
+   $rootScope.rate = 60000;
 	$scope.init = function(){
    	mailService.getMessages()
 			.success(function(jsonData, statusCode){
 				$scope.emails = jsonData;
 				$scope.newemails = jsonData;
 			});
-    loop();
+      loop();
 	};
     
     $rootScope.$on('rateEvent', function(event, rate) { 
@@ -71,5 +70,5 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, $
            $timeout(loop, $scope.rate);
            console.log('refreshed');
 			});
- };
+ 	};
 });

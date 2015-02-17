@@ -4,16 +4,20 @@
 angular.module('EmailApp').controller('ConfigurationCtrl', function ConfigurationCtrl($scope, localStorageService, $rootScope) {
 	'use strict';  
      
-     if (localStorageService.isSupported) {
+   $rootScope.data = {
+       localcss: ''
+   };	
+   
+   if (localStorageService.isSupported) {
          if(angular.isUndefined(localStorageService.get('localcss')) || localStorageService.get('localcss') === null) {
-             $scope.localcss = 'cyborg';
+             $rootScope.data.localcss = 'cyborg';
              }
          else {
-             $scope.localcss = localStorageService.get('localcss');
+             $rootScope.data.localcss = localStorageService.get('localcss');
           }
      }
     else { 
-        $scope.localcss = 'cyborg';
+        $rootScope.data.localcss = 'cyborg';
     }
             
       // create the list of bootswatches
@@ -27,12 +31,11 @@ angular.module('EmailApp').controller('ConfigurationCtrl', function Configuratio
         { name: 'Flatly', url: 'flatly' },
         { name: 'Slate', url: 'slate' }
       ];
-      
-       
-    $scope.$watch('localcss', function () {
-        if ($scope.localcss !== null ) {
-            localStorageService.add('localcss', $scope.localcss);          
-          }
+         
+    $scope.$watch('data.localcss', function () {
+        if ($rootScope.data.localcss !== null ) {
+         localStorageService.add('localcss', $rootScope.data.localcss);         
+        }
     });
     
     $scope.result = [];

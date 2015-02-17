@@ -94,7 +94,7 @@ angular.module('EmailApp').directive('listView', function() {
 
          scope.$watch('list', function(list) {
         		angular.forEach(list, function(mail, key) {
-        			$("tbody").prepend("<tr><td>" + mail.receivers +"</td><td><a href=\"#/sentview/" +mail.id+ "\">" + mail.title +"</a></td></tr>)");
+        			$("tbody").prepend("<tr><td>" + mail.receivers +"</td><td>" + mail.title + "</td></tr>)");
         		});
       	});
     	}
@@ -203,16 +203,20 @@ angular.module('EmailApp').directive('isActiveNav', [ '$location', function($loc
 angular.module('EmailApp').controller('ConfigurationCtrl', function ConfigurationCtrl($scope, localStorageService, $rootScope) {
 	'use strict';  
      
-     if (localStorageService.isSupported) {
+   $rootScope.data = {
+       localcss: ''
+   };	
+   
+   if (localStorageService.isSupported) {
          if(angular.isUndefined(localStorageService.get('localcss')) || localStorageService.get('localcss') === null) {
-             $scope.localcss = 'cyborg';
+             $rootScope.data.localcss = 'cyborg';
              }
          else {
-             $scope.localcss = localStorageService.get('localcss');
+             $rootScope.data.localcss = localStorageService.get('localcss');
           }
      }
     else { 
-        $scope.localcss = 'cyborg';
+        $rootScope.data.localcss = 'cyborg';
     }
             
       // create the list of bootswatches
@@ -226,13 +230,11 @@ angular.module('EmailApp').controller('ConfigurationCtrl', function Configuratio
         { name: 'Flatly', url: 'flatly' },
         { name: 'Slate', url: 'slate' }
       ];
-      
-       
-    $scope.$watch('localcss', function () {
-        if ($scope.localcss !== null ) {
-            localStorageService.add('localcss', $scope.localcss);         
-            $rootScope.localcss = $scope.localcss;
-          }
+         
+    $scope.$watch('data.localcss', function () {
+        if ($rootScope.data.localcss !== null ) {
+         localStorageService.add('localcss', $rootScope.data.localcss);         
+        }
     });
     
     $scope.result = [];
@@ -255,18 +257,17 @@ angular.module('EmailApp').controller('ConfigurationCtrl', function Configuratio
 });;/**
 * Controller: InboxCtrl
 */
-angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, $interval, mailService, $rootScope, $timeout) {
+angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, mailService, $rootScope, $timeout) {
 	'use strict';
 
-	$scope.aa="aa";
-    $rootScope.rate = 60000;
+   $rootScope.rate = 60000;
 	$scope.init = function(){
    	mailService.getMessages()
 			.success(function(jsonData, statusCode){
 				$scope.emails = jsonData;
 				$scope.newemails = jsonData;
 			});
-    loop();
+      loop();
 	};
     
     $rootScope.$on('rateEvent', function(event, rate) { 
@@ -325,7 +326,7 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, $
            $timeout(loop, $scope.rate);
            console.log('refreshed');
 			});
- };
+ 	};
 });;/**
 * Controller: NewMsgCtrl
 */

@@ -62,7 +62,7 @@ angular.module('EmailApp').directive('listView', function() {
 
          scope.$watch('list', function(list) {
         		angular.forEach(list, function(mail, key) {
-        			$("tbody").prepend("<tr><td>" + mail.receivers +"</td><td><a href=\"#/sentview/" +mail.id+ "\">" + mail.title +"</a></td></tr>)");
+        			$("tbody").prepend("<tr><td>" + mail.receivers +"</td><td>" + mail.title + "</td></tr>)");
         		});
       	});
     	}

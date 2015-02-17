@@ -8,14 +8,14 @@
 
             <div class="form-group">
                 <label>Motyw</label>
-                <select class="form-control" ng-model="localcss" ng-options="bootstrap.url as bootstrap.name for bootstrap in bootstraps">
+                <select class="form-control" ng-model="data.localcss" ng-options="bootstrap.url as bootstrap.name for bootstrap in bootstraps">
                 </select>
             </div>
             
              <div class="form-group">
                 <label>Czas odświeżania (w minutach)</label>
-                    <select class="form-control" ng-model="frequencies" ng-init="frequencies = result[0]" ng-options="o for o in result">></select> 
-                </select>
+                <select class="form-control" ng-model="frequencies" ng-init="frequencies = result[0]" ng-options="o for o in result">
+                </select> 
             </div>         
          </form>
     </div>
