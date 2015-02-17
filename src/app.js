@@ -1,4 +1,4 @@
-angular.module('EmailApp', ['ngRoute', 'LocalStorageModule']).config(['$routeProvider', 'localStorageServiceProvider', function ( $routeProvider, localStorageServiceProvider ) {
+angular.module('EmailApp', ['ngRoute', 'LocalStorageModule', 'mgcrea.ngStrap']).config(['$routeProvider', 'localStorageServiceProvider', function ( $routeProvider, localStorageServiceProvider ) {
 	'use strict';
 	// configure urls
 	$routeProvider
