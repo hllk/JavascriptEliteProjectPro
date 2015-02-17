@@ -8,6 +8,7 @@ angular.module('EmailApp').controller('NewMsgCtrl', function NewMsgCtrl($scope, 
     $scope.adresses = [{id: 1}];
     $scope.emails = [];
     $scope.storedEmails = [];
+    $scope.EMAIL_REGEXP = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i;
     
     if (localStorageService.isSupported) {
         console.log("Hurra!!");

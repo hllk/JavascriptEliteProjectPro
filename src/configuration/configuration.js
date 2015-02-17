@@ -41,8 +41,12 @@ angular.module('EmailApp').controller('ConfigurationCtrl', function Configuratio
     $scope.result = [];
     
     $scope.init = function() {
-    for (var i = 1; i <= 15; i++) {
-        $scope.result.push(i);
+        for (var i = 1; i <= 30; i++) {
+            $scope.result.push(i);
+        }
+        
+        if(angular.isUndefined($rootScope.frequencies) || $rootScope.frequencies === null) {
+            $rootScope.frequencies = 1;
         }
     };
     

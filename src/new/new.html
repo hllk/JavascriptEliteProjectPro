@@ -4,9 +4,9 @@
         <div class="form-group" data-ng-repeat="adress in adresses" ng-class="{ 'has-error': messageForm.email.$invalid && submitted}">
            <label for="inputEmail" class="col-sm-2 control-label">Odbiorca {{adress.id}}</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" ng-model="emails[adress.id-1]" placeholder="Adres odbiorcy" ng-options="stored for stored in storedEmails" autocomplete="off" bs-typeahead name="email" required>
+                <input type="text" class="form-control" ng-pattern="EMAIL_REGEXP" ng-model="emails[adress.id-1]" placeholder="Adres odbiorcy" ng-options="stored for stored in storedEmails" autocomplete="off" bs-typeahead name="email" required>
                 <span ng-show="messageForm.email.$error.required && submitted">Podaj email odbiorcy</span>
-                <span ng-show="messageForm.email.$error.email && submitted">Niepoprawny adres email</span>
+                <span ng-show="messageForm.email.$error.pattern && submitted">Niepoprawny adres email</span>
             </div>
             
         </div>

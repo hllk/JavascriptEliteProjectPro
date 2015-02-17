@@ -16,5 +16,14 @@
     ],
     "content": "jakaś treść",
     "sent": 1424184979137
+  },
+  {
+    "id": 1424210663451,
+    "title": "bla",
+    "receivers": [
+      "zoe@com"
+    ],
+    "content": "bla",
+    "sent": 1424210663451
   }
 ]
