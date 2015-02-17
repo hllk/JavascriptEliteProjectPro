@@ -6,8 +6,7 @@ angular.module('EmailApp').controller('ConfigurationCtrl', function Configuratio
      
    $rootScope.data = {
        localcss: '',
-       rate: ''
-   };	
+     };	
    
    if (localStorageService.isSupported) {
          if(angular.isUndefined(localStorageService.get('localcss')) || localStorageService.get('localcss') === null) {
