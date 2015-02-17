@@ -1,6 +1,6 @@
-<div ng-controller="ConfigurationCtrl">
+<div ng-controller="ConfigurationCtrl" ng-init="init()">
         <div class="item">
-            KONFIGURACJA
+           <label> KONFIGURACJA </label>  
         </div>
     
        <div class="well">
@@ -11,7 +11,13 @@
                 <select class="form-control" ng-model="localcss" ng-options="bootstrap.url as bootstrap.name for bootstrap in bootstraps">
                 </select>
             </div>
-        </form>
+            
+             <div class="form-group">
+                <label>Czas odświeżania (w minutach)</label>
+                    <select class="form-control" ng-model="frequencies" ng-init="frequencies = result[0]" ng-options="o for o in result">></select> 
+                </select>
+            </div>         
+         </form>
     </div>
 
 </div>

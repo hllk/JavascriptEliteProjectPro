@@ -1,17 +1,23 @@
 /**
 * Controller: InboxCtrl
 */
-angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, $interval, mailService) {
+angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, $interval, mailService, $rootScope, $timeout) {
 	'use strict';
 
 	$scope.aa="aa";
+    $rootScope.rate = 60000;
 	$scope.init = function(){
    	mailService.getMessages()
 			.success(function(jsonData, statusCode){
 				$scope.emails = jsonData;
 				$scope.newemails = jsonData;
 			});
+    loop();
 	};
+    
+    $rootScope.$on('rateEvent', function(event, rate) { 
+        $scope.rate = rate;       
+    });
 	
    $scope.delete = function (id) {
    	return mailService.deleteMessage(id)
@@ -46,7 +52,7 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, $
 		return true;
    };
    
-   $interval(function(){
+   var loop = function(){
       mailService.getMessages()
 			.success(function(jsonData, statusCode){
 				if(isEqual($scope.emails,jsonData)){
@@ -60,12 +66,10 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, $
 					for(i; i<end; i++){
 						$scope.newemails.push(jsonData[i]);		
 						$scope.emails.push(jsonData[i]);				
-					}
-					
-					
+					}				
 				}
+           $timeout(loop, $scope.rate);
+           console.log('refreshed');
 			});
-   }.bind(this), 5000);  
-   
-
+ };
 });

@@ -79,3 +79,4 @@ angular.module('EmailApp').factory('mailService', function InboxFactory ($rootSc
 	
 	return exports;
 });
+

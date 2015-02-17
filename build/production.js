@@ -195,10 +195,12 @@ angular.module('EmailApp').directive('isActiveNav', [ '$location', function($loc
     };
 	
 	return exports;
-});;/**
+});
+
+;/**
 * Controller: NewMsgCtrl
 */
-angular.module('EmailApp').controller('ConfigurationCtrl', function ConfigurationCtrl($scope, localStorageService) {
+angular.module('EmailApp').controller('ConfigurationCtrl', function ConfigurationCtrl($scope, localStorageService, $rootScope) {
 	'use strict';  
      
      if (localStorageService.isSupported) {
@@ -218,32 +220,57 @@ angular.module('EmailApp').controller('ConfigurationCtrl', function Configuratio
         { name: 'Cerulean', url: 'cerulean' },
         { name: 'Superhero', url: 'superhero' },
         { name: 'United', url: 'united' },
-        { name: 'Cyborg', url: 'cyborg' }
+        { name: 'Cyborg', url: 'cyborg' },
+        { name: 'Sandstone', url: 'sandstone' },
+        { name: 'Darkly', url: 'darkly' },
+        { name: 'Flatly', url: 'flatly' },
+        { name: 'Slate', url: 'slate' }
       ];
       
        
     $scope.$watch('localcss', function () {
         if ($scope.localcss !== null ) {
-            localStorageService.add('localcss', $scope.localcss);
-            console.log($scope.localcss);
+            localStorageService.add('localcss', $scope.localcss);          
           }
     });
+    
+    $scope.result = [];
+    
+    $scope.init = function() {
+    for (var i = 1; i <= 15; i++) {
+        $scope.result.push(i);
+        }
+    };
+    
+    $scope.frequencies = 1;
+
+    $scope.$watch('frequencies', function () {
+         $rootScope.$broadcast('rateEvent', $scope.frequencies * 60000);
+         }
+    );
+    
     
    
 });;/**
 * Controller: InboxCtrl
 */
-angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, $interval, mailService) {
+angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, $interval, mailService, $rootScope, $timeout) {
 	'use strict';
 
 	$scope.aa="aa";
+    $rootScope.rate = 60000;
 	$scope.init = function(){
    	mailService.getMessages()
 			.success(function(jsonData, statusCode){
 				$scope.emails = jsonData;
 				$scope.newemails = jsonData;
 			});
+    loop();
 	};
+    
+    $rootScope.$on('rateEvent', function(event, rate) { 
+        $scope.rate = rate;       
+    });
 	
    $scope.delete = function (id) {
    	return mailService.deleteMessage(id)
@@ -278,7 +305,7 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, $
 		return true;
    };
    
-   $interval(function(){
+   var loop = function(){
       mailService.getMessages()
 			.success(function(jsonData, statusCode){
 				if(isEqual($scope.emails,jsonData)){
@@ -292,14 +319,12 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, $
 					for(i; i<end; i++){
 						$scope.newemails.push(jsonData[i]);		
 						$scope.emails.push(jsonData[i]);				
-					}
-					
-					
+					}				
 				}
+           $timeout(loop, $scope.rate);
+           console.log('refreshed');
 			});
-   }.bind(this), 5000);  
-   
-
+ };
 });;/**
 * Controller: NewMsgCtrl
 */
