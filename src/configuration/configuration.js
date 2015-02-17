@@ -9,7 +9,7 @@ angular.module('EmailApp').controller('ConfigurationCtrl', function Configuratio
              $scope.localcss = 'cyborg';
              }
          else {
-              $scope.localcss = localStorageService.get('localcss');
+             $scope.localcss = localStorageService.get('localcss');
           }
      }
     else { 

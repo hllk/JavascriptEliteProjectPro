@@ -208,7 +208,7 @@ angular.module('EmailApp').controller('ConfigurationCtrl', function Configuratio
              $scope.localcss = 'cyborg';
              }
          else {
-              $scope.localcss = localStorageService.get('localcss');
+             $scope.localcss = localStorageService.get('localcss');
           }
      }
     else { 
@@ -230,7 +230,8 @@ angular.module('EmailApp').controller('ConfigurationCtrl', function Configuratio
        
     $scope.$watch('localcss', function () {
         if ($scope.localcss !== null ) {
-            localStorageService.add('localcss', $scope.localcss);          
+            localStorageService.add('localcss', $scope.localcss);         
+            $rootScope.localcss = $scope.localcss;
           }
     });
     
