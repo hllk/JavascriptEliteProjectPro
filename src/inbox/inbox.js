@@ -55,7 +55,8 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, m
    };
    
    var loop = function(){
-      mailService.getMessages()
+   	if($scope.location.path() == '/inbox'){
+        mailService.getMessages()
 			.success(function(jsonData, statusCode){
 				if(isEqual($scope.emails,jsonData)){
 					console.log("rowne");
@@ -72,5 +73,6 @@ angular.module('EmailApp').controller('InboxCtrl', function InboxCtrl ($scope, m
 				}
            $timeout(loop, $rootScope.rate);
       	});
- 	};
+ 	   }
+   };
 });
